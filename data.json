@@ -1,0 +1,48 @@
+[
+  {
+    "model": "dogs.dogs",
+    "pk": 1,
+    "fields": {
+      "name": "Рейчел",
+      "breed": 1,
+      "photo": "",
+      "b_day": "2021-09-02"
+    }
+  },
+  {
+    "model": "dogs.dogs",
+    "pk": 2,
+    "fields": {
+      "name": "Пей",
+      "breed": 2,
+      "photo": "",
+      "b_day": "2022-09-02"
+    }
+  },
+  {
+    "model": "dogs.dogs",
+    "pk": 3,
+    "fields": {
+      "name": "Поли",
+      "breed": 1,
+      "photo": "dogs/7594429_1000n.jpg",
+      "b_day": "2023-02-12"
+    }
+  },
+  {
+    "model": "dogs.breed",
+    "pk": 1,
+    "fields": {
+      "name": "Такса",
+      "description": "Маленькая и вытянутая"
+    }
+  },
+  {
+    "model": "dogs.breed",
+    "pk": 2,
+    "fields": {
+      "name": "Мопс",
+      "description": "Хрюкает и пукает"
+    }
+  }
+]
