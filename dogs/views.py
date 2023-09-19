@@ -1,7 +1,10 @@
+from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
-from dogs.models import Breed, Dogs
+
+from dogs.forms import DogForm, ParentForm
+from dogs.models import Breed, Dogs, Parent
 
 
 class IndexView(TemplateView):
@@ -15,21 +18,6 @@ class IndexView(TemplateView):
         context_data['object_list'] = Breed.objects.all()[:3]
         return context_data
 
-# def index(request):
-#     context = {
-#         'object_list': Breed.objects.all()[:3],
-#         'title': 'Питомник - Главная'
-#     }
-#     return render(request, 'dogs/index.html', context)
-
-
-# def breeds(request):
-#     context = {
-#         'object_list': Breed.objects.all(),
-#         'title': 'Питомник - все наши породы'
-#     }
-#     return render(request, 'dogs/breed_list.html', context)
-
 
 class BreedListView(ListView):
     model = Breed
@@ -37,14 +25,6 @@ class BreedListView(ListView):
         'title': 'Питомник - все наши породы'
     }
 
-
-# def breed_dogs(request, pk):
-#     breed_item = Breed.objects.get(pk=pk)
-#     context = {
-#         'object_list': Dogs.objects.filter(breed_id=pk),
-#         'title': f'Собаки породы - все наши породы {breed_item.name}'
-#     }
-#     return render(request, 'dogs/dogs_list.html', context)
 
 class DogListView(ListView):
     model = Dogs
@@ -65,16 +45,37 @@ class DogListView(ListView):
 
 class DogCreateView(CreateView):
     model = Dogs
-    fields = ('name', 'breed', )
+    form_class = DogForm
     success_url = reverse_lazy('dogs:breeds')
 
 
 class DogUpdateView(UpdateView):
     model = Dogs
-    fields = ('name', 'breed', )
+    form_class = DogForm
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        ParentFormset = inlineformset_factory(Dogs, Parent, form=ParentForm, extra=1)
+        if self.request.method == 'POST':
+            formset = ParentFormset(self.request.POST, instance=self.object)
+        else:
+            formset = ParentFormset(instance=self.object)
+
+        context_data['formset'] = formset
+        return context_data
+
+    def form_valid(self, form):
+        context_data = self.get_context_data()
+        formset = context_data['formset']
+        self.object = form.save()
+
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+        return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('dogs:breed', args=[self.object.breed.pk])
+        return reverse('dogs:dog_update', args=[self.kwargs.get('pk')])
 
 
 class DogDeleteView(DeleteView):

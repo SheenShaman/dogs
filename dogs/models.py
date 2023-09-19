@@ -27,3 +27,17 @@ class Breed(models.Model):
     class Meta:
         verbose_name = 'Порода'
         verbose_name_plural = 'Породы'
+
+
+class Parent(models.Model):
+    dog = models.ForeignKey(Dogs, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, verbose_name='Кличка')
+    breed = models.ForeignKey('Breed', verbose_name='Порода', on_delete=models.CASCADE)
+    b_day = models.DateField(**NULLABLE, verbose_name='Дата рождения')
+
+    def __str__(self):
+        return f'{self.name}({self.breed})'
+
+    class Meta:
+        verbose_name = 'Предок'
+        verbose_name_plural = 'Предки'
