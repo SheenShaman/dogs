@@ -5,8 +5,8 @@
     "fields": {
       "name": "Рейчел",
       "breed": 1,
-      "photo": "",
-      "b_day": "2021-09-02"
+      "photo": "dogs/Такса_Рейчел_GK4Q2s0.jpg",
+      "b_day": "2023-09-02"
     }
   },
   {
@@ -15,7 +15,7 @@
     "fields": {
       "name": "Пей",
       "breed": 2,
-      "photo": "",
+      "photo": "dogs/Мопс_Пей_589HjPk.jpg",
       "b_day": "2022-09-02"
     }
   },
@@ -25,8 +25,18 @@
     "fields": {
       "name": "Поли",
       "breed": 1,
-      "photo": "dogs/7594429_1000n.jpg",
+      "photo": "dogs/Такса-Поли_Zpo8MKj.jpg",
       "b_day": "2023-02-12"
+    }
+  },
+  {
+    "model": "dogs.dogs",
+    "pk": 4,
+    "fields": {
+      "name": "Джек",
+      "breed": 3,
+      "photo": "dogs/овчарка-1_mkXvwil.jpg",
+      "b_day": "2000-09-03"
     }
   },
   {
@@ -43,6 +53,34 @@
     "fields": {
       "name": "Мопс",
       "description": "Хрюкает и пукает"
+    }
+  },
+  {
+    "model": "dogs.breed",
+    "pk": 3,
+    "fields": {
+      "name": "Овчарка",
+      "description": "Большая и пушистая"
+    }
+  },
+  {
+    "model": "dogs.parent",
+    "pk": 1,
+    "fields": {
+      "dog": 2,
+      "name": "Мама Пей",
+      "breed": 2,
+      "b_day": "2020-01-01"
+    }
+  },
+  {
+    "model": "dogs.parent",
+    "pk": 2,
+    "fields": {
+      "dog": 2,
+      "name": "Папа Пей",
+      "breed": 2,
+      "b_day": "2019-02-02"
     }
   }
 ]
